@@ -61,23 +61,35 @@ An Example Workout with Embedded Exercises:
 
 (___TODO__: wireframes for all of the pages on your site; they can be as simple as photos of drawings or you can use a tool like Balsamiq, Omnigraffle, etc._)
 
-/list/create - page for creating a new shopping list
+/ - home page
 
-![list create](documentation/list-create.png)
+![/](documentation/index.jpg)
 
-/list - page for showing all shopping lists
+/register - registration page
 
-![list](documentation/list.png)
+![/register](documentation/registration.jpg)
 
-/list/slug - page for showing specific shopping list
+/login - login page
 
-![list](documentation/list-slug.png)
+![/login](documentation/login.jpg)
+
+/workouts/create - page for creating a new workout
+
+![workouts create](documentation/workouts-create.jpg)
+
+/workouts - page for showing all workouts
+
+![workouts](documentation/workouts.jpg)
+
+/list/slug - page for showing specific workout
+
+![workouts](documentation/workouts-slug.jpg)
 
 ## Site map
 
 (___TODO__: draw out a site map that shows how pages are related to each other_)
 
-Here's a [complex example from wikipedia](https://upload.wikimedia.org/wikipedia/commons/2/20/Sitemap_google.jpg), but you can create one without the screenshots, drop shadows, etc. ... just names of pages and where they flow to.
+![Site Map](documentation/sitemap.jpg)
 
 ## User Stories or Use Cases
 
