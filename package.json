@@ -1,0 +1,31 @@
+{
+  "name": "kshoes-final-project",
+  "version": "1.0.0",
+  "description": "The content below is an example project proposal / requirements document. Replace the text below the lines marked \"__TODO__\" with details specific to your project. Remove the \"TODO\" lines.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nyu-csci-ua-0480-001-fall-2019/Kshoes-final-project.git"
+  },
+  "author": "Kshoes",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nyu-csci-ua-0480-001-fall-2019/Kshoes-final-project/issues"
+  },
+  "homepage": "https://github.com/nyu-csci-ua-0480-001-fall-2019/Kshoes-final-project#readme",
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "eslint": "^6.6.0",
+    "eslint-plugin-mocha": "^6.2.1",
+    "mocha": "^6.2.2"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "express-session": "^1.17.0",
+    "hbs": "^4.0.6",
+    "path": "^0.12.7"
+  }
+}

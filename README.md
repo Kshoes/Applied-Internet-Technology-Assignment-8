@@ -2,25 +2,28 @@ The content below is an example project proposal / requirements document. Replac
 
 (___TODO__: your project name_)
 
-# Shoppy Shoperson 
+# Fitness Witness
 
 ## Overview
 
 (___TODO__: a brief one or two paragraph, high-level description of your project_)
 
-Remembering what to buy at the grocery store is waaaaay too difficult. Also, shopping for groceries when you're hungry leads to regrettable purchases. Sooo... that's where Shoppy Shoperson comes in!
+Keeping up with a regular habit of exercise is hard enough. Trying to remember new workouts and keeping track of old ones also wastes time and effort, when you could be using those precious minutes to maximize dem GAINZ. 💪
 
-Shoppy Shoperson is a web app that will allow users to keep track of multiple grocery lists. Users can register and login. Once they're logged in, they can create or view their grocery list. For every list that they have, they can add items to the list or cross off items.
+Fitness Witness is a web app that will allow users to keep track of their workout routines. Users can register and login. Once they're logged in, they can create and view their workout routines. As the users work out, they can select a routine and check off exercises as they go.
 
+(Optional features:)
+- Users can also add other users as friends and view their public workouts
+- Users can also track their progress regarding body weight and strength (workout template, add variable weight/sets/reps during the workout)
 
 ## Data Model
 
 (___TODO__: a description of your application's data and their relationships to each other_) 
 
-The application will store Users, Lists and Items
+The application will store Users, Workouts, and Exercises (maybe make Sets schema to customize reps/weight for each set)(Optional: Friends)
 
-* users can have multiple lists (via references)
-* each list can have multiple items (by embedding)
+* users can have multiple workouts (via references)
+* each workout can have multiple exercises (by embedding)
 
 (___TODO__: sample documents_)
 
@@ -28,28 +31,29 @@ An Example User:
 
 ```javascript
 {
-  username: "shannonshopper",
+  username: "reps4jesus",
   hash: // a password hash,
-  lists: // an array of references to List documents
+  workouts: // an array of references to Workout documents
 }
 ```
 
-An Example List with Embedded Items:
+An Example Workout with Embedded Exercises:
 
 ```javascript
 {
   user: // a reference to a User object
-  name: "Breakfast foods",
+  name: "Leg Day",
   items: [
-    { name: "pancakes", quantity: "9876", checked: false},
-    { name: "ramen", quantity: "2", checked: true},
+    { name: "squats", sets: 5, reps: 6, weight: 225, checked: true},  // weight in lbs
+    { name: "deadlifts", sets: 5, reps: 6, weight: 225, checked: false},
+    { name: "hip thrusts", sets: 5, reps: 8, weight: 135, checked: false}
   ],
   createdAt: // timestamp
 }
 ```
 
 
-## [Link to Commented First Draft Schema](db.js) 
+## [Link to Commented First Draft Schema](src/db.js) 
 
 (___TODO__: create a first draft of your Schemas in db.js and link to it_)
 
@@ -81,30 +85,25 @@ Here's a [complex example from wikipedia](https://upload.wikimedia.org/wikipedia
 
 1. as non-registered user, I can register a new account with the site
 2. as a user, I can log in to the site
-3. as a user, I can create a new grocery list
-4. as a user, I can view all of the grocery lists I've created in a single list
-5. as a user, I can add items to an existing grocery list
-6. as a user, I can cross off items in an existing grocery list
+3. as a user, I can create a new workout
+4. as a user, I can view all of the workouts I've created in a single list
+5. as a user, I can add items to an existing workout
+6. as a user, I can cross off exercises in an existing workout once I've completed them
 
 ## Research Topics
 
-(___TODO__: the research topics that you're planning on working on along with their point values... and the total points of research topics listed_)
+(___TODO__: the research topics that you're planning on working on along with their point values... and the total points of research topics listed_)  (Subject to change)
 
 * (5 points) Integrate user authentication
-    * I'm going to be using passport for user authentication
-    * And account has been made for testing; I'll email you the password
-    * see <code>cs.nyu.edu/~jversoza/ait-final/register</code> for register page
-    * see <code>cs.nyu.edu/~jversoza/ait-final/login</code> for login page
-* (4 points) Perform client side form validation using a JavaScript library
+    * I'm going to be using passport or parsley for user authentication
+    * An account will be made for testing; I'll email/dm you the password
+    * see <code>cs.nyu.edu/~kx360/ait-final/register</code> for register page
+    * see <code>cs.nyu.edu/~kx360/ait-final/login</code> for login page
+* (3 points) Perform client side form validation using a JavaScript library
     * see <code>cs.nyu.edu/~jversoza/ait-final/my-form</code>
     * if you put in a number that's greater than 5, an error message will appear in the dom
-* (5 points) vue.js
-    * used vue.js as the frontend framework; it's a challenging library to learn, so I've assigned it 5 points
 
-10 points total out of 8 required points (___TODO__: addtional points will __not__ count for extra credit_)
-
-
-## [Link to Initial Main Project File](app.js) 
+## [Link to Initial Main Project File](src/app.js) 
 
 (___TODO__: create a skeleton Express application with a package.json, app.js, views folder, etc. ... and link to your initial app.js_)
 
@@ -113,5 +112,4 @@ Here's a [complex example from wikipedia](https://upload.wikimedia.org/wikipedia
 (___TODO__: list any tutorials/references/etc. that you've based your code off of_)
 
 1. [passport.js authentication docs](http://passportjs.org/docs) - (add link to source code that was based on this)
-2. [tutorial on vue.js](https://vuejs.org/v2/guide/) - (add link to source code that was based on this)
 
