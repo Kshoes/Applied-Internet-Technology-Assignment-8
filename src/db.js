@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 // * our site requires authentication...
 // * so users have a username and password
 // * they also can have 0 or more workouts
-const User = new mongoose.Schema({
+const UserSchema = new mongoose.Schema({
   // username provided by authentication plugin
   // password hash provided by authentication plugin
   workouts:  [{ type: mongoose.Schema.Types.ObjectId, ref: 'Workout' }]
@@ -14,7 +14,7 @@ const User = new mongoose.Schema({
 // an exercise in a workout
 // * includes the name of the exercise, the number of sets, reps, and weight
 // * exercises in a workout can be crossed off once completed
-const Exercise = new mongoose.Schema({
+const ExerciseSchema = new mongoose.Schema({
   name: {type: String, required: true},
   sets: {type: Number, min: 1, required: true},
   reps: {type: Number, min: 1, required: true},
@@ -27,11 +27,11 @@ const Exercise = new mongoose.Schema({
 // a workout
 // * each workout must have a related user
 // * a workout can have 0 or more items
-const Workout = new mongoose.Schema({
+const WorkoutSchema = new mongoose.Schema({
   user: {type: mongoose.Schema.Types.ObjectId, ref:'User'},
   name: {type: String, required: true},
   createdAt: {type: Date, required: true},
-  exercises: [Exercise]
+  exercises: [{type: mongoose.Schema.Types.ObjectId, ref:'Exercise'}]
 });
 
 // TODO: add remainder of setup for slugs, connection, registering models, etc. below
@@ -42,6 +42,24 @@ mongoose.model('Exercise', ExerciseSchema);
 const Exercise = mongoose.model('Exercise');
 mongoose.model('Workout', WorkoutSchema);
 const Workout = mongoose.model('Workout');
+
+let dbconf;
+if (process.env.NODE_ENV === 'PRODUCTION') {
+    // if we're in PRODUCTION mode, then read the configration from a file
+    // use blocking file io to do this...
+    const fs = require('fs');
+    const path = require('path');
+    const fn = path.join(__dirname, '../config.json');
+    const data = fs.readFileSync(fn);
+
+    // our configuration file will be in json, so parse it and set the
+    // connection string appropriately!
+    const conf = JSON.parse(data);
+    dbconf = conf.dbconf;
+} else {
+ // if we're not in PRODUCTION mode, then use
+ dbconf = 'mongodb://localhost/fitnesswitnessdb';
+}
 
 mongoose.connect(dbconf, { useUnifiedTopology: true , useNewUrlParser: true});
 

@@ -1,0 +1,29 @@
+
+Search:
+<form action="/" method="GET">
+    Workout name: <input type="text" name="name" value="">
+    <input type="submit" name="" value="search">
+</form>
+
+My Workouts:
+<table>
+    <tr>
+        <th>Course name</th>
+        <th>Course number</th>
+        <th>Semester</th>
+        <th>Year</th>
+        <th>Professor</th>
+        <th>Review</th>
+    </tr>
+    {{#each workouts}}
+    <tr>
+        <th>{{courseName}}</th>
+        <th>{{courseNumber}}</th>
+        <th>{{semester}}</th>
+        <th>{{year}}</th>
+        <th>{{professor}}</th>
+        <th>{{review}}</th>
+    </tr>
+    {{!-- <div>{{courseName}}, {{courseNumber}}, {{semester}}, year, {{professor}}, {{review}}</div> --}}
+    {{/each}}
+</table>
