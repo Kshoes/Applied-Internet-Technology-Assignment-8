@@ -7,6 +7,8 @@ const app = express();
 const path = require('path');
 const bodyParser = require('body-parser');
 
+const passport = require('passport');
+
 // enable sessions
 const session = require('express-session');
 const sessionOptions = {
