@@ -41,7 +41,7 @@ An Example Workout with Embedded Exercises:
 
 ```javascript
 {
-  user: // a reference to a User object
+  user: "Kshoes", // a reference to a User object
   name: "Leg Day",
   exercises: [
     { name: "squats", sets: 5, reps: 6, weight: 225, checked: true},  // weight in lbs
