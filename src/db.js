@@ -6,9 +6,9 @@ const mongoose = require('mongoose');
 // * so users have a username and password
 // * they also can have 0 or more workouts
 const UserSchema = new mongoose.Schema({
-  // username provided by authentication plugin
-  // password hash provided by authentication plugin
-  workouts:  [{ type: mongoose.Schema.Types.ObjectId, ref: 'Workout' }]
+  username: {type: String, required: true}, // username provided by authentication plugin
+  password: {type: String, required: true}  // password hash provided by authentication plugin
+  // workouts:  [{ type: mongoose.Schema.Types.ObjectId, ref: 'Workout' }]
 });
 
 // an exercise in a workout
@@ -61,7 +61,8 @@ if (process.env.NODE_ENV === 'PRODUCTION') {
  dbconf = process.env.MONGODB_URI || 'mongodb://testUser:testPassword1@ds241258.mlab.com:41258/heroku_wrt6b2wv';
 }
 
-mongoose.connect(dbconf, { useUnifiedTopology: true , useNewUrlParser: true});
+mongoose.connect(dbconf, {useMongoClient: true, useUnifiedTopology: true , useNewUrlParser: true});
+
 
 module.exports = {
     User: User,
