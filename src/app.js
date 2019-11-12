@@ -36,7 +36,36 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', (req, res) => {
-  res.render('index');  // landing page 
+  const userQ = req.query.userQ;
+  const nameQ = req.query.nameQ;
+  const createdAtQ = req.query.createdAtQ;
+  const exercisesQ = req.query.exercisesQ;
+
+  const queryObj = {};
+  if(userQ) {
+      queryObj.user = userQ;
+      console.log(queryObj);
+  }
+  if(nameQ) {
+      queryObj.name = nameQ;
+      console.log(queryObj);
+  }
+  if(createdAtQ) {
+      queryObj.createdAt = createdAtQ;
+      console.log(queryObj);
+  }
+  if(exercisesQ) {
+    queryObj.exercises = exercisesQ;
+    console.log(queryObj);
+  }
+  Workout.find(queryObj, (err, workouts) => {
+      if(err) {
+          throw err;
+      }
+      else {
+          res.render('index', {workouts: workouts});
+      }
+  });
 });
 
 app.get('/workouts', (req, res) => {

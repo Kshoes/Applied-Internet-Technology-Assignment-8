@@ -43,7 +43,7 @@ An Example Workout with Embedded Exercises:
 {
   user: // a reference to a User object
   name: "Leg Day",
-  items: [
+  exercises: [
     { name: "squats", sets: 5, reps: 6, weight: 225, checked: true},  // weight in lbs
     { name: "deadlifts", sets: 5, reps: 6, weight: 225, checked: false},
     { name: "hip thrusts", sets: 5, reps: 8, weight: 135, checked: false}

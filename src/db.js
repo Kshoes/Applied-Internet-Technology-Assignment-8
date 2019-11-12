@@ -58,7 +58,7 @@ if (process.env.NODE_ENV === 'PRODUCTION') {
     dbconf = conf.dbconf;
 } else {
  // if we're not in PRODUCTION mode, then use
- dbconf = process.env.MONGODB_URI //|| 'mongodb://localhost/fitnesswitnessdb';
+ dbconf = process.env.MONGODB_URI || 'mongodb://localhost/fitnesswitnessdb';
 }
 
 mongoose.connect(dbconf, { useUnifiedTopology: true , useNewUrlParser: true});

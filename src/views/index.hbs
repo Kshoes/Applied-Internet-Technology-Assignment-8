@@ -1,29 +1,27 @@
 
 Search:
 <form action="/" method="GET">
-    Workout name: <input type="text" name="name" value="">
+    User: <input type="text" name="userQ" value="">
+    Workout name: <input type="text" name="nameQ" value="">
+    Created on: <input type="text" name="createdAtQ" value="">
+    Exercises: <input type="text" name="exercisesQ" value="">
     <input type="submit" name="" value="search">
 </form>
 
 My Workouts:
 <table>
     <tr>
-        <th>Course name</th>
-        <th>Course number</th>
-        <th>Semester</th>
-        <th>Year</th>
-        <th>Professor</th>
-        <th>Review</th>
+        <th>User</th>
+        <th>Workout Name</th>
+        <th>Created on</th>
+        <th>Exercises</th>
     </tr>
     {{#each workouts}}
     <tr>
-        <th>{{courseName}}</th>
-        <th>{{courseNumber}}</th>
-        <th>{{semester}}</th>
-        <th>{{year}}</th>
-        <th>{{professor}}</th>
-        <th>{{review}}</th>
+        <th>{{user}}</th>
+        <th>{{name}}</th>
+        <th>{{createdAt}}</th>
+        <th>{{exercises}}</th>
     </tr>
-    {{!-- <div>{{courseName}}, {{courseNumber}}, {{semester}}, year, {{professor}}, {{review}}</div> --}}
     {{/each}}
 </table>
