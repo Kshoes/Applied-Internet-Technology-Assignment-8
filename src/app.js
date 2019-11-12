@@ -1,6 +1,7 @@
   
 require('./db.js');
 
+const PORT = process.env.PORT || 3000;
 const express = require('express');
 const app = express();
 
@@ -51,5 +52,5 @@ app.post('/login', passport.authenticate('local', { // stub code for passport
   failureRedirect: '/login' 
 }));
 
-app.listen(3000);
+app.listen(PORT);
 console.log('Server started; type CTRL+C to shut down');

@@ -58,7 +58,7 @@ if (process.env.NODE_ENV === 'PRODUCTION') {
     dbconf = conf.dbconf;
 } else {
  // if we're not in PRODUCTION mode, then use
- dbconf = 'mongodb://localhost/fitnesswitnessdb';
+ dbconf = 'mongodb://heroku_wrt6b2wv:id13tc04i8c3nnpqdkt0j0blb0@ds241258.mlab.com:41258/heroku_wrt6b2wv';
 }
 
 mongoose.connect(dbconf, { useUnifiedTopology: true , useNewUrlParser: true});
