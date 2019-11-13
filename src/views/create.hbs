@@ -7,8 +7,36 @@
     Workout name: <input type="text" name="name" value="">
     Created on: <input type="text" name="createdAt" value="">
     Exercises: <input type="text" name="exercises" value="">
-    <a href="#" id="addExerciseButton" onclick=
-    <input type="submit" name="" value="Create workout">
+    <a href="#" id="addExerciseButton" onclick="addExercise()"></a>
+    <div id="exerciseContainer"/>
+    <input type="submit" name="" value="Create workout!">
 
 </form>
+<script>
+    let exerciseCount = 0;
+    function addExercise(){
+        exerciseCount++;
+        const exerciseContainer = document.getElementById("exerciseContainer");
+
+        exerciseContainer.appendChild(document.createTextNode("Exercise " + exerciseCount + " name: "));
+        const nameInput = document.createElement("ex" + exerciseCount + "Name");
+        nameInput.type = "text";
+        exerciseContainer.appendChild(nameInput);
+
+        exerciseContainer.appendChild(document.createTextNode("Sets: "));
+        const setsInput = document.createElement("ex" + exerciseCount + "Sets");
+        setsInput.type = "number";
+        exerciseContainer.appendChild(setsInput);
+
+        exerciseContainer.appendChild(document.createTextNode("Reps: "));
+        const repsInput = document.createElement("ex" + exerciseCount + "Reps");
+        repsInput.type = "number";
+        exerciseContainer.appendChild(repsInput);
+
+        exerciseContainer.appendChild(document.createTextNode("Weight: "));
+        const weightInput = document.createElement("ex" + exerciseCount + "Weight");
+        weightInput.type = "number";
+        exerciseContainer.appendChild(weightInput);
+    }
+</script>
 </div>
