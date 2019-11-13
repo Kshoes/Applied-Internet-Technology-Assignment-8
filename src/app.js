@@ -87,16 +87,18 @@ app.post('/workouts/create', (req, res) => {
     exercises: []
   });
 
-  const exerciseCount = req.body.exerciseContainer.lastChild.name.slice(2, 3);
+  const exerciseCount = req.body.exerciseContainer.childNodes.length/8; //lastChild.name.slice(2, 3); 
   console.log(exerciseCount);
-  for(let i = 2; i <= exerciseCount; i+2) {
+  for(let i = 1; i <= exerciseCount; i++) {
 
     const newExercise = new Exercise({
-      name: req.body.exerciseContainer.childNodes[i%8],
-      sets: 
-
+      name: req.body.exerciseContainer.childNodes[(i*2)],
+      sets: req.body.exerciseContainer.childNodes[((i+1)*2)],
+      reps: req.body.exerciseContainer.childNodes[((i+2)*2)],
+      weight: req.body.exerciseContainer.childNodes[((i+3)*2)],
     });
-    newWorkout.exercises.push
+    newWorkout.exercises.push(newExercise);
+    
   }
 
   newWorkout.save((err) => {
