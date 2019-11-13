@@ -21,7 +21,13 @@ My Workouts:
         <th>{{user.username}}</th>
         <th>{{name}}</th>
         <th>{{createdAt}}</th>
-        <th>{{exercises}}</th>
+        <th>
+            <ul>
+                {{#each exercises}}
+                <li>{{this.name}}</li>
+                {{/each}}
+            </ul>
+        </th>
     </tr>
     {{/each}}
 </table>

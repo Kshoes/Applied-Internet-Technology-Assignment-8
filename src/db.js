@@ -61,7 +61,7 @@ if (process.env.NODE_ENV === 'PRODUCTION') {
  dbconf = process.env.MONGODB_URI || 'mongodb://testUser:testPassword1@ds241258.mlab.com:41258/heroku_wrt6b2wv';
 }
 
-mongoose.connect(dbconf, {useMongoClient: true, useUnifiedTopology: true , useNewUrlParser: true});
+mongoose.connect(dbconf, {useUnifiedTopology: true , useNewUrlParser: true});
 
 
 module.exports = {

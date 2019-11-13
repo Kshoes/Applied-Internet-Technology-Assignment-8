@@ -1,4 +1,4 @@
-  
+
 require('./db.js');
 
 const PORT = process.env.PORT || 3000;
@@ -13,9 +13,9 @@ const passport = require('passport');
 // enable sessions
 const session = require('express-session');
 const sessionOptions = {
-    secret: 'secret cookie thang (store this elsewhere!)',
-    resave: true,
-      saveUninitialized: true
+  secret: 'secret cookie thang (store this elsewhere!)',
+  resave: true,
+  saveUninitialized: true
 };
 app.use(session(sessionOptions));
 
@@ -42,43 +42,49 @@ app.get('/', (req, res) => {
   const exercisesQ = req.query.exercisesQ;
 
   const queryObj = {};
-  if(userQ) {
-      queryObj.user = userQ;
-      console.log(queryObj);
+  if (userQ) {
+    queryObj.user = userQ;
+    console.log(queryObj);
   }
-  if(nameQ) {
-      queryObj.name = nameQ;
-      console.log(queryObj);
+  if (nameQ) {
+    queryObj.name = nameQ;
+    console.log(queryObj);
   }
-  if(createdAtQ) {
-      queryObj.createdAt = createdAtQ;
-      console.log(queryObj);
+  if (createdAtQ) {
+    queryObj.createdAt = createdAtQ;
+    console.log(queryObj);
   }
-  if(exercisesQ) {
+  if (exercisesQ) {
     queryObj.exercises = exercisesQ;
     console.log(queryObj);
   }
   Workout.find(queryObj, (err, workouts) => {
-      if(err) {
-          throw err;
-      }
-      else {
-          res.render('index', {workouts: workouts});
-      }
+    if (err) {
+      throw err;
+    }
+    else {
+      res.render('index', { workouts: workouts });
+    }
   });
 });
 
 app.get('/workouts', (req, res) => {
   res.render('index');
-})
+});
 
 app.get('/workouts/create', (req, res) => {
   res.render('create');
-})
+});
+
+// app.post('/workouts/create', (req, res) => {
+//   const newWorkout = new Workout({
+
+//   })
+// });
 
 app.post('/login', passport.authenticate('local', { // stub code for passport
   successRedirect: '/',
-  failureRedirect: '/login' 
+  failureRedirect: '/login'
 }));
 
 app.listen(PORT);
