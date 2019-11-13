@@ -76,11 +76,43 @@ app.get('/workouts/create', (req, res) => {
   res.render('create');
 });
 
-// app.post('/workouts/create', (req, res) => {
-//   const newWorkout = new Workout({
+app.post('/workouts/create', (req, res) => {
+  const newWorkout = new Workout({
+    user: {
+      username: req.body.user,
+      password: "password"
+    },
+    name: req.body.name,
+    createdAt: Date.now(),
+    exercises: []
+  });
 
-//   })
-// });
+  const exerciseCount = req.body.exerciseContainer.lastChild.name.slice(2, 3);
+  console.log(exerciseCount);
+  for(let i = 2; i <= exerciseCount; i+2) {
+
+    const newExercise = new Exercise({
+      name: req.body.exerciseContainer.childNodes[i%8],
+      sets: 
+
+    });
+    newWorkout.exercises.push
+  }
+
+  newWorkout.save((err) => {
+    if(err) {
+        throw err;
+    }
+    if(req.session.added) {
+        req.session.added.push(newWorkout);
+    }
+    else {
+        req.session.added = [];
+        req.session.added.push(newWorkout);
+    }
+    res.redirect('/');
+  });
+});
 
 app.post('/login', passport.authenticate('local', { // stub code for passport
   successRedirect: '/',
