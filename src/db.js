@@ -28,7 +28,7 @@ const ExerciseSchema = new mongoose.Schema({
 // * each workout must have a related user
 // * a workout can have 0 or more items
 const WorkoutSchema = new mongoose.Schema({
-  user: {type: mongoose.Schema.Types.ObjectId, ref:'User'},
+  user_id: {type: mongoose.Schema.Types.ObjectId, ref:'User'},
   name: {type: String, required: true},
   createdAt: {type: Date, required: true},
   exercises: [{type: mongoose.Schema.Types.ObjectId, ref:'Exercise'}]
@@ -58,7 +58,7 @@ if (process.env.NODE_ENV === 'PRODUCTION') {
     dbconf = conf.dbconf;
 } else {
  // if we're not in PRODUCTION mode, then use
- dbconf = process.env.MONGODB_URI || 'mongodb://localhost/fitnesswitnessdb' //'mongodb://testUser:testPassword1@ds241258.mlab.com:41258/heroku_wrt6b2wv';
+ dbconf = process.env.MONGODB_URI // || 'mongodb://localhost/fitnesswitnessdb' //'mongodb://testUser:testPassword1@ds241258.mlab.com:41258/heroku_wrt6b2wv';
 }
 
 mongoose.connect(dbconf, {useUnifiedTopology: true , useNewUrlParser: true});

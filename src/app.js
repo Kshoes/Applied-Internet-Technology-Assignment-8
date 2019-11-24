@@ -123,3 +123,36 @@ app.post('/login', passport.authenticate('local', { // stub code for passport
 
 app.listen(PORT);
 console.log('Server started; type CTRL+C to shut down');
+
+ /*
+ 
+{
+  "user_id": "5ddaf763a2518ff152280549",
+  "name": "Leg Day",
+  "exercises": [
+      {
+          "name": "squats",
+          "sets": 5,
+          "reps": 6,
+          "weight": 225,
+          "checked": "true"
+      },
+      {
+          "name": "deadlifts",
+          "sets": 5,
+          "reps": 6,
+          "weight": 225,
+          "checked": "false"
+      },
+      {
+          "name": "hip thrusts",
+          "sets": 5,
+          "reps": 8,
+          "weight": 135,
+          "checked": "false"
+      }
+  ],
+  "createdAt": "11/11/19"
+}
+
+*/
