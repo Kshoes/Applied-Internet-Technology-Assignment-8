@@ -18,13 +18,13 @@ My Workouts:
     </tr>
     {{#each workouts}}
     <tr>
-        <th>{{user.username}}</th>
+        <th>{{user_id.username}}</th>
         <th>{{name}}</th>
         <th>{{createdAt}}</th>
         <th>
             <ul>
                 {{#each exercises}}
-                <li>{{this.name}}</li>
+                <li>{{name}}</li>
                 {{/each}}
             </ul>
         </th>

@@ -63,13 +63,23 @@ app.get('/', (req, res) => {
       throw err;
     }
     else {
+      
       res.render('index', { workouts: workouts });
     }
   });
 });
 
 app.get('/workouts', (req, res) => {
-  res.render('index');
+
+  Workout.find({}, function(err, workouts, count) {
+    if(err) {
+      throw err;
+    }
+    else {
+      res.render('index', { workouts: workouts });
+    }
+  });
+
 });
 
 app.get('/workouts/create', (req, res) => {
@@ -125,7 +135,7 @@ app.listen(PORT);
 console.log('Server started; type CTRL+C to shut down');
 
  /*
- 
+
 {
   "user_id": "5ddaf763a2518ff152280549",
   "name": "Leg Day",

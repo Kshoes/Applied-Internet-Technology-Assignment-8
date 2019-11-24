@@ -43,6 +43,14 @@ const Exercise = mongoose.model('Exercise');
 mongoose.model('Workout', WorkoutSchema);
 const Workout = mongoose.model('Workout');
 
+
+Workout.find({ "user_id": "5864ac80fa769f09a4881791" })
+    .populate('user_id')
+    .exec(function (err, docs) {
+        //console.log(docs[0].user_id.name);
+        console.log(docs);
+    });
+
 let dbconf;
 if (process.env.NODE_ENV === 'PRODUCTION') {
     // if we're in PRODUCTION mode, then read the configration from a file
