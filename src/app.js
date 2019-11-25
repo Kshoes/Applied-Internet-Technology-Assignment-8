@@ -85,7 +85,7 @@ app.get('/register', (req, res) => {
   res.render('register');
 });
 
-app.post('/register', (req, res) => {
+app.post('/register', async (req, res) => {
   try {
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
     const newUser = new User({
