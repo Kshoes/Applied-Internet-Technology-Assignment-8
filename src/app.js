@@ -70,7 +70,7 @@ app.get('/', (req, res) => {
 
 app.get('/workouts', (req, res) => {
 
-  Workout.find(queryObj, (err, workouts) => {
+  Workout.find({}, (err, workouts) => {
     if (err) {
       throw err;
     }
