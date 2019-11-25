@@ -75,13 +75,13 @@ app.get('/workouts', (req, res) => {
       throw err;
     }
     else {
-      Workout.find().populate('user_id').exec( (err, user_id) => {
+      Workout.find().populate('user_id', 'username').exec( (err, username) => {
         if(err) {
           throw err;
         }
         else {
-          console.log('USERNAME:' + user_id.username);
-          res.render('index', {workouts: workouts, user_id: user_id});
+          console.log('USERNAME: ' + username);
+          res.render('index', {workouts: workouts, username: username});
         }
       });
     }
