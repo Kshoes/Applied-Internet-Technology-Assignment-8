@@ -63,7 +63,7 @@ app.get('/', (req, res) => {
       throw err;
     }
     else {
-      
+
       res.render('index', { workouts: workouts });
     }
   });
@@ -71,14 +71,14 @@ app.get('/', (req, res) => {
 
 app.get('/workouts', (req, res) => {
 
-  Workout.find({}, function(err, workouts, count) {
+  Workout.find().populate('user_id').exec( (err, user_id) => {
     if(err) {
       throw err;
     }
     else {
-      res.render('index', { workouts: workouts });
+      res.render('index', {workouts: workouts, user_id: user_id})
     }
-  });
+  })
 
 });
 
