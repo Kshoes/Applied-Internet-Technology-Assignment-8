@@ -80,11 +80,10 @@ app.get('/workouts', (req, res) => {
           throw err;
         }
         else {
-          res.render('index', {workouts: workouts, user_id: user_id})
           console.log('USERNAME:' + user_id.username);
+          res.render('index', {workouts: workouts, user_id: user_id});
         }
-      })
-      res.render('index', { workouts: workouts });
+      });
     }
   });
 
