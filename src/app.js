@@ -4,7 +4,7 @@ require('./db.js');
 const PORT = process.env.PORT || 3000;
 const express = require('express');
 const app = express();
-
+const authRoutes = require('./routes/auth-routes');
 const path = require('path');
 const bodyParser = require('body-parser');
 
@@ -24,6 +24,9 @@ const URLSlugs = require('mongoose-url-slugs');
 const User = mongoose.model('User');
 const Workout = mongoose.model('Workout');
 const Exercise = mongoose.model('Exercise');
+
+// route setup
+app.use('auth', authRoutes);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -63,7 +66,15 @@ app.get('/', (req, res) => {
       throw err;
     }
     else {
-      res.render('index', { workouts: workouts });
+      Workout.find().populate('user_id').populate('exercises').exec( (err, workouts) => {
+        if(err) {
+          throw err;
+        }
+        else {
+          console.log('WORKOUT: ' + workouts);
+          res.render('index', {workouts: workouts});
+        }
+      });
     }
   });
 });
