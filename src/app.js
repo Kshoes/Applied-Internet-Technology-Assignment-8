@@ -4,7 +4,7 @@ require('./db.js');
 const PORT = process.env.PORT || 3000;
 const express = require('express');
 const app = express();
-const authRoutes = require('./routes/auth-routes');
+// const authRoutes = require('./routes/auth-routes');
 const path = require('path');
 const bodyParser = require('body-parser');
 
@@ -27,7 +27,7 @@ const Workout = mongoose.model('Workout');
 const Exercise = mongoose.model('Exercise');
 
 // route setup
-app.use('/auth', authRoutes);
+// app.use('/auth', authRoutes);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -81,6 +81,15 @@ app.get('/', (req, res) => {
 });
 
 
+
+app.get('/login', (req, res) => {
+  res.render('login');
+});
+
+app.post('/login', async (req, res) => {
+
+});
+
 app.get('/register', (req, res) => {
   res.render('register');
 });
@@ -99,13 +108,18 @@ app.post('/register', async (req, res) => {
       else {
         res.json(result);
       }
-      res.redirect('/auth/login');
+      res.redirect('/login');
     });
   }
   catch {
     res.redirect('/register');
   }
-})
+});
+
+
+
+
+
 
 
 app.get('/workouts', (req, res) => {
