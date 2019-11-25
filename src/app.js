@@ -63,7 +63,6 @@ app.get('/', (req, res) => {
       throw err;
     }
     else {
-
       res.render('index', { workouts: workouts });
     }
   });
@@ -71,14 +70,23 @@ app.get('/', (req, res) => {
 
 app.get('/workouts', (req, res) => {
 
-  Workout.find().populate('user_id').exec( (err, user_id) => {
-    if(err) {
+  Workout.find(queryObj, (err, workouts) => {
+    if (err) {
       throw err;
     }
     else {
-      res.render('index', {workouts: workouts, user_id: user_id})
+      Workout.find().populate('user_id').exec( (err, user_id) => {
+        if(err) {
+          throw err;
+        }
+        else {
+          res.render('index', {workouts: workouts, user_id: user_id})
+          console.log('USERNAME:' + user_id.username);
+        }
+      })
+      res.render('index', { workouts: workouts });
     }
-  })
+  });
 
 });
 
