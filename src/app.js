@@ -26,7 +26,7 @@ const Workout = mongoose.model('Workout');
 const Exercise = mongoose.model('Exercise');
 
 // route setup
-app.use('auth', authRoutes);
+app.use('/auth', authRoutes);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
