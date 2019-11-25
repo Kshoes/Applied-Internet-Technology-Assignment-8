@@ -69,13 +69,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/workouts', (req, res) => {
-
-  Workout.find({}, (err, workouts) => {
-    if (err) {
-      throw err;
-    }
-    else {
-      Workout.find().populate('user_id', 'username').exec( (err, workouts) => {
+    Workout.find().populate('user_id', 'username').exec( (err, workouts) => {
         if(err) {
           throw err;
         }
@@ -83,10 +77,7 @@ app.get('/workouts', (req, res) => {
           console.log('WORKOUT: ' + workout);
           res.render('index', {workouts: workouts});
         }
-      });
-    }
-  });
-
+    });
 });
 
 app.get('/workouts/create', (req, res) => {
