@@ -99,7 +99,7 @@ app.post('/register', async (req, res) => {
       else {
         res.json(result);
       }
-      res.redirect('/login');
+      res.redirect('/auth/login');
     });
   }
   catch {
