@@ -9,6 +9,7 @@ const path = require('path');
 const bodyParser = require('body-parser');
 
 const passport = require('passport');
+const bcrypt = require('bcrypt');
 
 // enable sessions
 const session = require('express-session');
@@ -78,6 +79,34 @@ app.get('/', (req, res) => {
     }
   });
 });
+
+
+app.get('/register', (req, res) => {
+  res.render('register');
+});
+
+app.post('/register', (req, res) => {
+  try {
+    const hashedPassword = await bcrypt.hash(req.body.password, 10);
+    const newUser = new User({
+      username: req.body.username,
+      password: hashedPassword
+    });
+    newUser.save((err, result) => {
+      if(err) {
+        throw err;
+      }
+      else {
+        res.json(result);
+      }
+      res.redirect('/login');
+    });
+  }
+  catch {
+    res.redirect('/register');
+  }
+})
+
 
 app.get('/workouts', (req, res) => {
 
