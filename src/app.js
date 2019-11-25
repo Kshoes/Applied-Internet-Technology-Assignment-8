@@ -75,7 +75,7 @@ app.get('/workouts', (req, res) => {
       throw err;
     }
     else {
-      Workout.find().populate('user_id', 'username').exec( (err, workouts) => {
+      Workout.find().populate('user_id', 'exercises').exec( (err, workouts) => {
         if(err) {
           throw err;
         }
