@@ -94,11 +94,11 @@ An Example Workout with Exercises:
 ## Research Topics
 
 
-* (5 points) Integrate user authentication
+* (6 points) Integrate user authentication
     * I'm going to be using passport or parsley for user authentication
     * An account will be made for testing; I'll email/dm you the password
     * users not logged in/unregistered users will automatically be redirected to the login page
-* (3 points) Perform client side form validation using a JavaScript library
+* (2 points) Perform client side form validation using a JavaScript library
     * see <code>cs.nyu.edu/~jversoza/ait-final/my-form</code>
     * if you put in a number that's greater than 5, an error message will appear in the dom
 

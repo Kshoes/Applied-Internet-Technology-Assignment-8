@@ -204,7 +204,7 @@ app.get('/workouts', checkAuthenticated, (req, res) => {
       throw err;
     }
     else {
-      Workout.find().populate('user_id').populate('exercises').exec( (err, workouts) => {
+      Workout.find({user_id: req.session.user.user_id}).populate('user_id').populate('exercises').exec( (err, workouts) => {
         if(err) {
           throw err;
         }
