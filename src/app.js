@@ -168,7 +168,7 @@ app.get('/', checkAuthenticated, (req, res) => {
         throw err;
       }
       else {
-        queryObj.exercises = JSON.parse(' { "$oid:" "' + exercise._id + '"} ');
+        queryObj.exercises = JSON.parse(' { "$oid": "' + exercise._id + '"} ');
       }
     });
     console.log(queryObj);
