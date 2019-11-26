@@ -1,8 +1,11 @@
 
+let exerciseCount = 0;
 
+document.addEventListener('load', function() {
 
-    let exerciseCount = 0;
-    function addExercise(){
+    document.getElementById('addExerciseButton').addEventListener('click', function() {
+
+    // function addExercise(){
         exerciseCount++;
         const exerciseContainer = document.getElementById("exerciseContainer");
 
@@ -29,7 +32,40 @@
         weightInput.type = "number";
         weightInput.name = "ex" + exerciseCount + "Weight";
         exerciseContainer.appendChild(weightInput);
-    }
+    // }
+
+
+    });  
+})
+
+    // function addExercise(){
+    //     exerciseCount++;
+    //     const exerciseContainer = document.getElementById("exerciseContainer");
+
+    //     exerciseContainer.appendChild(document.createTextNode("Exercise " + exerciseCount + " name: "));
+    //     const nameInput = document.createElement("input");
+    //     nameInput.type = "text";
+    //     nameInput.name = "ex" + exerciseCount + "Name";
+    //     exerciseContainer.appendChild(nameInput);
+
+    //     exerciseContainer.appendChild(document.createTextNode("Sets: "));
+    //     const setsInput = document.createElement("input");
+    //     setsInput.type = "number";
+    //     setsInput.name = "ex" + exerciseCount + "Sets";
+    //     exerciseContainer.appendChild(setsInput);
+
+    //     exerciseContainer.appendChild(document.createTextNode("Reps: "));
+    //     const repsInput = document.createElement("input");
+    //     repsInput.type = "number";
+    //     repsInput.name = "ex" + exerciseCount + "Reps";
+    //     exerciseContainer.appendChild(repsInput);
+
+    //     exerciseContainer.appendChild(document.createTextNode("Weight: "));
+    //     const weightInput = document.createElement("input");
+    //     weightInput.type = "number";
+    //     weightInput.name = "ex" + exerciseCount + "Weight";
+    //     exerciseContainer.appendChild(weightInput);
+    // }
 
 function getQuestions() {
     const req = new XMLHttpRequest();
@@ -103,26 +139,26 @@ function getQuestions() {
     req.send();
 }
 
-function showQuestionModal() {
-    const questionModal = document.getElementById("modal-question");
-    // questionModal.style.display = "block";
-    // console.log(questionModal.style.display);
-    // console.log(questionModal.classList);
-    questionModal.classList.add('open');
-}
+// function showQuestionModal() {
+//     const questionModal = document.getElementById("modal-question");
+//     // questionModal.style.display = "block";
+//     // console.log(questionModal.style.display);
+//     // console.log(questionModal.classList);
+//     questionModal.classList.add('open');
+// }
 
-function showAnswerModal() {
-    const answerModal = document.getElementById("modal-answer");
-    answerModal.classList.add('open');
-}
+// function showAnswerModal() {
+//     const answerModal = document.getElementById("modal-answer");
+//     answerModal.classList.add('open');
+// }
 
-function hideModal() {
-    const modals = document.getElementsByClassName("modal");
-    for(const m of modals) {
-        // m.style.display = "none";
-        m.classList.remove('open');
-    }
-}
+// function hideModal() {
+//     const modals = document.getElementsByClassName("modal");
+//     for(const m of modals) {
+//         // m.style.display = "none";
+//         m.classList.remove('open');
+//     }
+// }
 
 function submitQuestion() {
     const question = document.getElementById('question-text').value;

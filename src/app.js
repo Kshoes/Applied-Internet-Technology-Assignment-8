@@ -146,16 +146,14 @@ app.get('/', checkAuthenticated, (req, res) => {
 
   const queryObj = {};
   if (userQ) {
-    User.find({username: userQ}, (err, user) => {
+    User.find({username: userQ}, (err, users) => {
       if(err) {
         throw err;
       }
       else {
-        console.log(user[0]);
-        console.log(user[0]._id);
-        console.log(user[0].username);
-        //queryObj.user_id = user.id;
-        queryObj.user_id = user[0]._id;
+        users.map(function(ele) {
+          queryObj.user_id = ele._id;
+        });
       }
     });
     console.log(queryObj);
@@ -232,20 +230,6 @@ app.post('/workouts/create', checkAuthenticated, (req, res) => {
     exercises: []
   });
 
-  // const exerciseCount = req.body.exerciseContainer.childNodes.length/8; // lastChild.name.slice(2, 3); 
-  // console.log(exerciseCount);
-  // for(let i = 1; i <= exerciseCount; i++) {
-
-  //   const newExercise = new Exercise({
-  //     name: req.body.exerciseContainer.childNodes[(i*2)],
-  //     sets: req.body.exerciseContainer.childNodes[((i+1)*2)],
-  //     reps: req.body.exerciseContainer.childNodes[((i+2)*2)],
-  //     weight: req.body.exerciseContainer.childNodes[((i+3)*2)],
-  //   });
-    
-  //   newWorkout.exercises.push(newExercise);
-    
-  // }
   console.log(req.session.user._id);
   newWorkout.save((err) => {
     if(err) {
