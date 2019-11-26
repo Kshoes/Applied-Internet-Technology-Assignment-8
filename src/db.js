@@ -6,8 +6,8 @@ const mongoose = require('mongoose');
 // * so users have a username and password
 // * they also can have 0 or more workouts
 const UserSchema = new mongoose.Schema({
-  username: {type: String, required: true}, // username provided by authentication plugin
-  password: {type: String, required: true}  // password hash provided by authentication plugin
+  // username: {type: String, required: true}, // username provided by authentication plugin
+  // password: {type: String, required: true}  // password hash provided by authentication plugin
   // workouts:  [{ type: mongoose.Schema.Types.ObjectId, ref: 'Workout' }]
 });
 

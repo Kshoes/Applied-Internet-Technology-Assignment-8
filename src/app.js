@@ -24,14 +24,17 @@ const methodOverride = require('method-override');  // override post to call app
 app.use(methodOverride('_method'));
 
 const passport = require('passport');
-const initializePassport = require('./config/passport-config.js');
-initializePassport(
-  passport, 
-  function (username) { User.findOne({ username: username }).bind(username), function(err, user) {return user.username}},
-  // username => users.find(user => user.username = username), 
-  function(id) { return User.findOne({ _id: id }).bind(id), function(err, user) {return user._id}},
-  // id => users.find(user => user.id = id)
-);
+require('./config/passport-config.js');
+
+// const initializePassport = require('./config/passport-config.js');
+
+// initializePassport(
+//   passport, 
+//   function (username) { User.findOne({ username: username }).bind(username), function(err, user) {return user.username}},
+//   // username => users.find(user => user.username = username), 
+//   function(id) { return User.findOne({ _id: id }).bind(id), function(err, user) {return user._id}},
+//   // id => users.find(user => user.id = id)
+// );
 
 
 
@@ -116,37 +119,62 @@ app.get('/login', checkNotAuthenticated, (req, res) => {
   res.render('login');
 });
 
-app.post('/login', checkNotAuthenticated, passport.authenticate('local', {
-  successRedirect: '/',
-  failureRedirect: '/login',
-  failureFlash: true
-}));
+app.post('/login', function(req, res, next) {
+  passport.authenticate('local', function(err,user) {
+    if(user) {
+      req.logIn(user, function(err) {
+        res.redirect('/');
+      });
+    } else {
+      res.render('login', {message:'Your login or password is incorrect.'});
+    }
+  })(req, res, next);
+});
+
+// app.post('/login', checkNotAuthenticated, passport.authenticate('local', {
+//   successRedirect: '/',
+//   failureRedirect: '/login',
+//   failureFlash: true
+// }));
 
 app.get('/register', checkNotAuthenticated, (req, res) => {
   res.render('register');
 });
 
-app.post('/register', checkNotAuthenticated, async (req, res) => {
-  try {
-    const hashedPassword = await bcrypt.hash(req.body.password, 10);
-    const newUser = new User({
-      username: req.body.username,
-      password: hashedPassword
-    });
-    newUser.save((err, result) => {
-      if(err) {
-        throw err;
-      }
-      else {
-        res.json(result);
-      }
-      res.redirect('/login');
-    });
-  }
-  catch {
-    res.redirect('/register');
-  }
+app.post('/register', checkNotAuthenticated, (req, res) => {
+  User.register(new User({username:req.body.username}), 
+  req.body.password, function(err, user){
+  if (err) {
+    res.render('register', { message:'Invalid registration, try again' });
+  } else {
+  passport.authenticate('local')(req, res, function() {
+    res.redirect('/');
+  });
+}
 });
+});
+
+// app.post('/register', checkNotAuthenticated, async (req, res) => {
+//   try {
+//     const hashedPassword = await bcrypt.hash(req.body.password, 10);
+//     const newUser = new User({
+//       username: req.body.username,
+//       password: hashedPassword
+//     });
+//     newUser.save((err, result) => {
+//       if(err) {
+//         throw err;
+//       }
+//       else {
+//         res.json(result);
+//       }
+//       res.redirect('/login');
+//     });
+//   }
+//   catch {
+//     res.redirect('/register');
+//   }
+// });
 
 
 
