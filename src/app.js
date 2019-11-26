@@ -27,9 +27,9 @@ const passport = require('passport');
 const initializePassport = require('./config/passport-config.js');
 initializePassport(
   passport, 
-  function (username) { return User.findOne({ username: username }).bind(username)},
+  function (username) { User.findOne({ username: username }).bind(username), function(err, user) {return user.username}},
   // username => users.find(user => user.username = username), 
-  function(id) { return User.findOne({ _id: id }).bind(id) },
+  function(id) { return User.findOne({ _id: id }).bind(id), function(err, user) {return user._id}},
   // id => users.find(user => user.id = id)
 );
 
