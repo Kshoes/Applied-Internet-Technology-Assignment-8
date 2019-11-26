@@ -244,7 +244,7 @@ app.post('/workouts/create', checkAuthenticated, (req, res) => {
         req.session.added.push(newWorkout); console.log("workout added " + newWorkout.name);
         req.session.selectedWorkout = newWorkout.name; 
     }
-    res.redirect('/workouts/create/add-exercises');
+    res.redirect('/workouts/create/add-exercise');
   });
 });
 
