@@ -1,4 +1,4 @@
-// 1ST DRAFT DATA MODEL
+
 const mongoose = require('mongoose');
 
 // users
@@ -10,6 +10,9 @@ const UserSchema = new mongoose.Schema({
   password: {type: String, required: true}  // password hash provided by authentication plugin
   // workouts:  [{ type: mongoose.Schema.Types.ObjectId, ref: 'Workout' }]
 });
+
+const passportLocalMongoose = require('passport-local-mongoose');
+UserSchema.plugin(passportLocalMongoose);
 
 // an exercise in a workout
 // * includes the name of the exercise, the number of sets, reps, and weight

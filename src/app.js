@@ -8,17 +8,44 @@ const app = express();
 const path = require('path');
 const bodyParser = require('body-parser');
 
-const passport = require('passport');
-const bcrypt = require('bcrypt');
+const flash = require('express-flash');
+app.use(flash());
 
 // enable sessions
 const session = require('express-session');
 const sessionOptions = {
-  secret: 'secret cookie thang (store this elsewhere!)',
+  secret: process.env.SESSION_SECRET, //'secret cookie thang (store this elsewhere!)',
   resave: true,
   saveUninitialized: true
 };
 app.use(session(sessionOptions));
+
+const methodOverride = require('method-override');  // override post to call app.delete
+app.use(methodOverride('_method'));
+
+const passport = require('passport');
+const initializePassport = require('./config/passport-config.js');
+initializePassport(
+  passport, 
+  // username => User.findOne({ username: user.username }),
+  username => users.find(user => user.username = username), 
+  // id => User.findOne({ _id: user.id })
+  id => users.find(user => user.id = id)
+);
+
+
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.use(function(req, res, next){
+	res.locals.user = req.user;
+	next();
+});
+
+const bcrypt = require('bcrypt');
+
+
 
 const mongoose = require('mongoose');
 const URLSlugs = require('mongoose-url-slugs');
@@ -39,62 +66,66 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // serve static files
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.get('/', (req, res) => {
-  const userQ = req.query.userQ;
-  const nameQ = req.query.nameQ;
-  const createdAtQ = req.query.createdAtQ;
-  const exercisesQ = req.query.exercisesQ;
+app.get('/', checkAuthenticated, (req, res) => {
 
-  const queryObj = {};
-  if (userQ) {
-    queryObj.user = userQ;
-    console.log(queryObj);
-  }
-  if (nameQ) {
-    queryObj.name = nameQ;
-    console.log(queryObj);
-  }
-  if (createdAtQ) {
-    queryObj.createdAt = createdAtQ;
-    console.log(queryObj);
-  }
-  if (exercisesQ) {
-    queryObj.exercises = exercisesQ;
-    console.log(queryObj);
-  }
-  Workout.find(queryObj, (err, workouts) => {
-    if (err) {
-      throw err;
-    }
-    else {
-      Workout.find().populate('user_id').populate('exercises').exec( (err, workouts) => {
-        if(err) {
-          throw err;
-        }
-        else {
-          console.log('WORKOUT: ' + workouts);
-          res.render('index', {workouts: workouts});
-        }
-      });
-    }
-  });
+  res.render('index', { name: req.user.username})
+  // const userQ = req.query.userQ;
+  // const nameQ = req.query.nameQ;
+  // const createdAtQ = req.query.createdAtQ;
+  // const exercisesQ = req.query.exercisesQ;
+
+  // const queryObj = {};
+  // if (userQ) {
+  //   queryObj.user = userQ;
+  //   console.log(queryObj);
+  // }
+  // if (nameQ) {
+  //   queryObj.name = nameQ;
+  //   console.log(queryObj);
+  // }
+  // if (createdAtQ) {
+  //   queryObj.createdAt = createdAtQ;
+  //   console.log(queryObj);
+  // }
+  // if (exercisesQ) {
+  //   queryObj.exercises = exercisesQ;
+  //   console.log(queryObj);
+  // }
+  // Workout.find(queryObj, (err, workouts) => {
+  //   if (err) {
+  //     throw err;
+  //   }
+  //   else {
+  //     Workout.find().populate('user_id').populate('exercises').exec( (err, workouts) => {
+  //       if(err) {
+  //         throw err;
+  //       }
+  //       else {
+  //         console.log('WORKOUT: ' + workouts);
+  //         res.render('index', {workouts: workouts});
+  //       }
+  //     });
+  //   }
+  // });
 });
 
 
 
-app.get('/login', (req, res) => {
+app.get('/login', checkNotAuthenticated, (req, res) => {
   res.render('login');
 });
 
-app.post('/login', async (req, res) => {
+app.post('/login', checkNotAuthenticated, passport.authenticate('local', {
+  successRedirect: '/',
+  failureRedirect: '/login',
+  failureFlash: true
+}));
 
-});
-
-app.get('/register', (req, res) => {
+app.get('/register', checkNotAuthenticated, (req, res) => {
   res.render('register');
 });
 
-app.post('/register', async (req, res) => {
+app.post('/register', checkNotAuthenticated, async (req, res) => {
   try {
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
     const newUser = new User({
@@ -122,7 +153,7 @@ app.post('/register', async (req, res) => {
 
 
 
-app.get('/workouts', (req, res) => {
+app.get('/workouts', checkAuthenticated, (req, res) => {
 
   Workout.find({}, (err, workouts) => {
     if (err) {
@@ -143,11 +174,11 @@ app.get('/workouts', (req, res) => {
 
 });
 
-app.get('/workouts/create', (req, res) => {
+app.get('/workouts/create', checkAuthenticated, (req, res) => {
   res.render('create');
 });
 
-app.post('/workouts/create', (req, res) => {
+app.post('/workouts/create', checkAuthenticated, (req, res) => {
   const newWorkout = new Workout({
     user: {
       username: req.body.user,
@@ -187,10 +218,30 @@ app.post('/workouts/create', (req, res) => {
   });
 });
 
-app.post('/login', passport.authenticate('local', { // stub code for passport
-  successRedirect: '/',
-  failureRedirect: '/login'
-}));
+// app.post('/login', passport.authenticate('local', { // stub code for passport
+//   successRedirect: '/',
+//   failureRedirect: '/login'
+// }));
+
+app.delete('/logout', (req, res) => {
+  req.logOut();
+  res.redirect('/login');
+});
+
+function checkAuthenticated(req, res, next) {
+  if(req.isAuthenticated()) {
+    return next();
+  }
+  res.redirect('/login');
+}
+
+function checkNotAuthenticated(req, res, next) {
+  if(req.isAuthenticated()) {
+    return res.redirect('/');
+  }
+  next();
+}
+
 
 app.listen(PORT);
 console.log('Server started; type CTRL+C to shut down');
