@@ -150,8 +150,8 @@ app.get('/', checkAuthenticated, (req, res) => {
       }
       else {
         console.log(user);
-        console.log(user._id);
-        queryObj.user_id = user._id;
+        console.log(user.id);
+        queryObj.user_id = user.id;
       }
     });
     console.log(queryObj);
