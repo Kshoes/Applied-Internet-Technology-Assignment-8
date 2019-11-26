@@ -155,7 +155,7 @@ app.get('/', checkAuthenticated, (req, res) => {
         console.log(user[0]._id);
         console.log(user[0].username);
         //queryObj.user_id = user.id;
-        queryObj.username = user[0]._id;
+        queryObj.user_id = user[0]._id;
       }
     });
     console.log(queryObj);
@@ -169,13 +169,14 @@ app.get('/', checkAuthenticated, (req, res) => {
     console.log(queryObj);
   }
   if (exercisesQ) {
-    Exercise.find({name: exercisesQ}, (err, exercise) => {
+    Exercise.find({name: exercisesQ}, (err, exercises) => {
       if(err) {
         throw err;
       }
       else {
-
-        queryObj.exercises = JSON.parse(' { "$oid": "' + exercise._id + '"} ');
+        exercises.map(function(ele) {
+          queryObj.exercises = JSON.parse(' { "$oid": "' + ele._id + '"} ');
+        });
       }
     });
     console.log(queryObj);
