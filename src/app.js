@@ -248,11 +248,11 @@ app.post('/workouts/create', checkAuthenticated, (req, res) => {
   });
 });
 
-app.get('/workouts/create/add-exercises', checkAuthenticated, (req, res) => {
+app.get('/workouts/create/add-exercise', checkAuthenticated, (req, res) => {
   res.render('addExercises', {workoutName: req.session.selectedWorkout});
 });
 
-app.post('/workouts/create/add-exercises', checkAuthenticated, (req, res) => {
+app.post('/workouts/create/add-exercise', checkAuthenticated, (req, res) => {
 
   const newExercise = new Exercise({
     name: req.body.name,
@@ -264,6 +264,9 @@ app.post('/workouts/create/add-exercises', checkAuthenticated, (req, res) => {
   newExercise.save((err) => {
     if (err) {
       throw err;
+    }
+    else {
+      console.log(newExercise);
     }
   });
 
