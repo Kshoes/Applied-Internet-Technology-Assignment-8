@@ -1,12 +1,17 @@
 
 <div>
 
-<h2>Add Exercises</h2>
+<h2>Add Exercise</h2>
 
-<form action="/workouts/create/add-exercises" method="POST">
+<form action="/workouts/create/add-exercise" method="POST">
 
     Workout name: <h3>{{workoutName}}</h3>
-    Exercises:
+
+    Exercise name: <input type="text" name="name" value="">
+    Sets: <input type="number" name="sets" value="">
+    Reps: <input type="number" name="reps" value="">
+    Weight <input type="number" name="weight" value="">
+
     <a href="#" id="addExerciseButton">Add Exercise!</a>
     <div id="exerciseContainer" name="exerciseContainer">
     <input type="submit" name="" value="Add Exercises!">
