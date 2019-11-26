@@ -79,7 +79,7 @@ app.post('/login', function(req, res, next) {
   passport.authenticate('local', function(err, user) {
     if(user) {
       req.logIn(user, function(err) {
-        req.session.user = user;  console.log(req.session.user);
+        req.session.user = user;  console.log(req.session.user.username);
         res.redirect('/');
       });
     } else {
@@ -106,7 +106,7 @@ app.post('/register', checkNotAuthenticated, (req, res) => {
       } 
       else {
       passport.authenticate('local')(req, res, function() {
-        req.session.user = user;  console.log(req.session.user);
+        req.session.user = user;  console.log(req.session.user.username);
         res.redirect('/');
       });
     }
@@ -139,7 +139,6 @@ app.post('/register', checkNotAuthenticated, (req, res) => {
 
 app.get('/', checkAuthenticated, (req, res) => {
 
-  // res.render('index', { name: req.user.username})
   const userQ = req.query.userQ;
   const nameQ = req.query.nameQ;
   const createdAtQ = req.query.createdAtQ;
@@ -232,31 +231,31 @@ app.post('/workouts/create', checkAuthenticated, (req, res) => {
     exercises: []
   });
 
-  const exerciseCount = req.body.exerciseContainer.childNodes.length/8; //lastChild.name.slice(2, 3); 
-  console.log(exerciseCount);
-  for(let i = 1; i <= exerciseCount; i++) {
+  // const exerciseCount = req.body.exerciseContainer.childNodes.length/8; // lastChild.name.slice(2, 3); 
+  // console.log(exerciseCount);
+  // for(let i = 1; i <= exerciseCount; i++) {
 
-    const newExercise = new Exercise({
-      name: req.body.exerciseContainer.childNodes[(i*2)],
-      sets: req.body.exerciseContainer.childNodes[((i+1)*2)],
-      reps: req.body.exerciseContainer.childNodes[((i+2)*2)],
-      weight: req.body.exerciseContainer.childNodes[((i+3)*2)],
-    });
+  //   const newExercise = new Exercise({
+  //     name: req.body.exerciseContainer.childNodes[(i*2)],
+  //     sets: req.body.exerciseContainer.childNodes[((i+1)*2)],
+  //     reps: req.body.exerciseContainer.childNodes[((i+2)*2)],
+  //     weight: req.body.exerciseContainer.childNodes[((i+3)*2)],
+  //   });
     
-    newWorkout.exercises.push(newExercise);
+  //   newWorkout.exercises.push(newExercise);
     
-  }
+  // }
 
   newWorkout.save((err) => {
     if(err) {
         throw err;
     }
     if(req.session.added) {
-        req.session.added.push(newWorkout);
+        req.session.added.push(newWorkout); console.log("workout added!");
     }
     else {
         req.session.added = [];
-        req.session.added.push(newWorkout);
+        req.session.added.push(newWorkout); console.log("workout added!");
     }
     res.redirect('/');
   });
