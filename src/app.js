@@ -254,42 +254,55 @@ app.get('/workouts/create/add-exercises', checkAuthenticated, (req, res) => {
 
 app.post('/workouts/create/add-exercises', checkAuthenticated, (req, res) => {
 
-  const exerciseCount = req.body.exerciseContainer.childNodes.length/8;
-  const exercises = [];
-  console.log(exerciseCount);
-  for(let i = 1; i <= exerciseCount; i++) {
+  const newExercise = new Exercise({
+    name: req.body.name,
+    sets: req.body.sets,
+    reps: req.body.reps,
+    weight: req.body.weight
+  });
 
-    const newExercise = new Exercise({
-      name: req.body.exerciseContainer.childNodes[(i*2)],
-      sets: req.body.exerciseContainer.childNodes[((i+1)*2)],
-      reps: req.body.exerciseContainer.childNodes[((i+2)*2)],
-      weight: req.body.exerciseContainer.childNodes[((i+3)*2)],
-    });
+  newExercise.save((err) => {
+    if (err) {
+      throw err;
+    }
+  });
+
+  // const exerciseCount = req.body.exerciseContainer.childNodes.length/8;
+  // const exercises = [];
+  // console.log(exerciseCount);
+  // for(let i = 1; i <= exerciseCount; i++) {
+
+  //   const newExercise = new Exercise({
+  //     name: req.body.exerciseContainer.childNodes[(i*2)],
+  //     sets: req.body.exerciseContainer.childNodes[((i+1)*2)],
+  //     reps: req.body.exerciseContainer.childNodes[((i+2)*2)],
+  //     weight: req.body.exerciseContainer.childNodes[((i+3)*2)],
+  //   });
     
-    newExercise.save((err) => {
-      if (err) {
-        throw err;
-      }
-      else {
-        exercises.push(newExercise);
-      }
-    });
+  //   newExercise.save((err) => {
+  //     if (err) {
+  //       throw err;
+  //     }
+  //     else {
+  //       exercises.push(newExercise);
+  //     }
+  //   });
 
-  }
+  // }
 
-  exercises.map(function(ele) { 
-    Workout.findByIdAndUpdate(req.params.id, { "$push": { exercises: ele._id } }, { "new": true }, (err, docs) => {
-      
-      if(err) {
-         return res.send(500, {error: 'database error: could not add exercise'});
-      }
-      else {
-         res.json(docs);
-      }
-    });
-  })
+  // exercises.map(function(ele) { 
+  //   Workout.findByIdAndUpdate(req.params.id, { "$push": { exercises: ele._id } }, { "new": true }, (err, docs) => {
 
-  Workout.findByIdAndUpdate(req.params.id, { "$push": { exercises: req.body.answer } }, { "new": true }, (err, docs) => {
+  //     if(err) {
+  //        return res.send(500, {error: 'database error: could not add exercise'});
+  //     }
+  //     else {
+  //        res.json(docs);
+  //     }
+  //   });
+  // })
+
+  Workout.findByIdAndUpdate(req.params.id, { "$push": { exercises: newExercise} }, { "new": true }, (err, docs) => {
     // send back JSON (for example, updated objects... or simply a message saying that this succeeded)
     // ...if error, send back an error message ... optionally, set status to 500
     if(err) {
