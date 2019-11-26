@@ -27,11 +27,12 @@ const passport = require('passport');
 const initializePassport = require('./config/passport-config.js');
 initializePassport(
   passport, 
-  // username => User.findOne({ username: user.username }),
-  username => users.find(user => user.username = username), 
-  // id => User.findOne({ _id: user.id })
-  id => users.find(user => user.id = id)
+  function (username) { return User.findOne({ username: username }).bind(username)},
+  // username => users.find(user => user.username = username), 
+  function(id) { return User.findOne({ _id: id }).bind(id) },
+  // id => users.find(user => user.id = id)
 );
+
 
 
 
