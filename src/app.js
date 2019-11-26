@@ -225,7 +225,7 @@ app.get('/workouts/create', checkAuthenticated, (req, res) => {
 
 app.post('/workouts/create', checkAuthenticated, (req, res) => {
   const newWorkout = new Workout({
-    user: req.session.user,
+    user_id: req.session.user.user_id,
     name: req.body.name,
     createdAt: Date.now(),
     exercises: []
@@ -251,20 +251,25 @@ app.post('/workouts/create', checkAuthenticated, (req, res) => {
         throw err;
     }
     if(req.session.added) {
-        req.session.added.push(newWorkout); console.log("workout added!");
+        req.session.added.push(newWorkout); console.log("workout added: " + newWorkout.name);
+        req.session.selectedWorkout = newWorkout.name; 
     }
     else {
         req.session.added = [];
-        req.session.added.push(newWorkout); console.log("workout added!");
+        req.session.added.push(newWorkout); console.log("workout added " + newWorkout.name);
+        req.session.selectedWorkout = newWorkout.name; 
     }
-    res.redirect('/');
+    res.redirect('/workouts/create/add-exercises');
   });
 });
 
-// app.post('/login', passport.authenticate('local', { // stub code for passport
-//   successRedirect: '/',
-//   failureRedirect: '/login'
-// }));
+app.get('/workouts/create/add-exercises', checkAuthenticated, (req, res) => {
+  res.render('addExercises', {workoutName: req.session.selectedWorkout});
+});
+
+app.post('/workouts/create/add-exercises', checkAuthenticated, (req, res) => {
+  
+});
 
 app.delete('/logout', (req, res) => {
   req.logOut();
