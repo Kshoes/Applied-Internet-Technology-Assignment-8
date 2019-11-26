@@ -1,6 +1,36 @@
 
 
 
+    let exerciseCount = 0;
+    function addExercise(){
+        exerciseCount++;
+        const exerciseContainer = document.getElementById("exerciseContainer");
+
+        exerciseContainer.appendChild(document.createTextNode("Exercise " + exerciseCount + " name: "));
+        const nameInput = document.createElement("input");
+        nameInput.type = "text";
+        nameInput.name = "ex" + exerciseCount + "Name";
+        exerciseContainer.appendChild(nameInput);
+
+        exerciseContainer.appendChild(document.createTextNode("Sets: "));
+        const setsInput = document.createElement("input");
+        setsInput.type = "number";
+        setsInput.name = "ex" + exerciseCount + "Sets";
+        exerciseContainer.appendChild(setsInput);
+
+        exerciseContainer.appendChild(document.createTextNode("Reps: "));
+        const repsInput = document.createElement("input");
+        repsInput.type = "number";
+        repsInput.name = "ex" + exerciseCount + "Reps";
+        exerciseContainer.appendChild(repsInput);
+
+        exerciseContainer.appendChild(document.createTextNode("Weight: "));
+        const weightInput = document.createElement("input");
+        weightInput.type = "number";
+        weightInput.name = "ex" + exerciseCount + "Weight";
+        exerciseContainer.appendChild(weightInput);
+    }
+
 function getQuestions() {
     const req = new XMLHttpRequest();
 

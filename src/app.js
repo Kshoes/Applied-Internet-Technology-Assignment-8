@@ -151,11 +151,11 @@ app.get('/', checkAuthenticated, (req, res) => {
         throw err;
       }
       else {
-        console.log(user);
-        console.log(user.id);
-        console.log(user.username);
+        console.log(user[0]);
+        console.log(user[0]._id);
+        console.log(user[0].username);
         //queryObj.user_id = user.id;
-        queryObj.username = username;
+        queryObj.username = user[0]._id;
       }
     });
     console.log(queryObj);
@@ -268,7 +268,36 @@ app.get('/workouts/create/add-exercises', checkAuthenticated, (req, res) => {
 });
 
 app.post('/workouts/create/add-exercises', checkAuthenticated, (req, res) => {
-  
+
+
+
+
+  Workout.findByIdAndUpdate(req.params.id, { "$push": { answers: req.body.answer } }, { "new": true }, (err, docs) => {
+    // send back JSON (for example, updated objects... or simply a message saying that this succeeded)
+    // ...if error, send back an error message ... optionally, set status to 500
+    if(err) {
+       return res.send(500, {error: 'database error: could not add exercise'});
+    }
+    else {
+       res.json(docs);
+    }
+  });
+
+  // const exerciseCount = req.body.exerciseContainer.childNodes.length/8; // lastChild.name.slice(2, 3); 
+  // console.log(exerciseCount);
+  // for(let i = 1; i <= exerciseCount; i++) {
+
+  //   const newExercise = new Exercise({
+  //     name: req.body.exerciseContainer.childNodes[(i*2)],
+  //     sets: req.body.exerciseContainer.childNodes[((i+1)*2)],
+  //     reps: req.body.exerciseContainer.childNodes[((i+2)*2)],
+  //     weight: req.body.exerciseContainer.childNodes[((i+3)*2)],
+  //   });
+    
+  //   newWorkout.exercises.push(newExercise);
+    
+  // }
+
 });
 
 app.delete('/logout', (req, res) => {
