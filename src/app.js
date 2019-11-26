@@ -306,15 +306,13 @@ app.post('/workouts/create/add-exercise', checkAuthenticated, (req, res) => {
   // })
 
   Workout.findByIdAndUpdate(req.params.id, { "$push": { exercises: newExercise._id} }, { "new": true }, (err, docs) => {
-    // send back JSON (for example, updated objects... or simply a message saying that this succeeded)
-    // ...if error, send back an error message ... optionally, set status to 500
     if(err) {
        return res.send(500, {error: 'database error: could not add exercise'});
     }
     else {
-       res.json(docs);
+      res.redirect('/workouts/create/add-exercise');
+      //  res.json(docs);
     }
-    res.redirect('/workouts/create/add-exercise');
   });
 
   // const exerciseCount = req.body.exerciseContainer.childNodes.length/8; // lastChild.name.slice(2, 3); 
