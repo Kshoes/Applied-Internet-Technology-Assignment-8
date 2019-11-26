@@ -34,21 +34,21 @@ function initialize(passport, getUserByUsername, getUserById) {
 
 
 
-        if(user == null) {
-            return done(null, false, {message: 'User not found'});
-        }
+        // if(user == null) {
+        //     return done(null, false, {message: 'User not found'});
+        // }
 
-        try {
-            if ( await bcrypt.compare(password, user.password) ) {
-                return done(null, user)
-            }
-            else {
-                return done(null, false, {message: 'Password incorrect'})
-            }
-        }
-        catch(err) {
-            return done(err);
-        }
+        // try {
+        //     if ( await bcrypt.compare(password, user.password) ) {
+        //         return done(null, user)
+        //     }
+        //     else {
+        //         return done(null, false, {message: 'Password incorrect'})
+        //     }
+        // }
+        // catch(err) {
+        //     return done(err);
+        // }
 
     }
 
