@@ -9,7 +9,7 @@ const bcrypt = require('bcrypt');
 
 function initialize(passport, getUserByUsername, getUserById) {
 
-    const authenticateUser = async (username, password, done) => {
+    const authenticateUser = (username, password, done) => {
         const user = getUserByUsername(username);
         // User.findOne( {username: username}, async function(err, user) {
 
@@ -37,7 +37,7 @@ function initialize(passport, getUserByUsername, getUserById) {
             if (!user) {
               return done(null, false, { message: 'User not found' });
             }
-            
+
             if (!user.validPassword(password)) {
               return done(null, false, { message: 'Incorrect password' });
             }
