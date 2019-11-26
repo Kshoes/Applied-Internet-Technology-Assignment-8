@@ -47,8 +47,7 @@ app.use(function(req, res, next){
 	next();
 });
 
-const bcrypt = require('bcrypt');
-
+// const bcrypt = require('bcrypt');
 
 
 const mongoose = require('mongoose');
@@ -70,49 +69,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // serve static files
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.get('/', checkAuthenticated, (req, res) => {
-
-  res.render('index', { name: req.user.username})
-  // const userQ = req.query.userQ;
-  // const nameQ = req.query.nameQ;
-  // const createdAtQ = req.query.createdAtQ;
-  // const exercisesQ = req.query.exercisesQ;
-
-  // const queryObj = {};
-  // if (userQ) {
-  //   queryObj.user = userQ;
-  //   console.log(queryObj);
-  // }
-  // if (nameQ) {
-  //   queryObj.name = nameQ;
-  //   console.log(queryObj);
-  // }
-  // if (createdAtQ) {
-  //   queryObj.createdAt = createdAtQ;
-  //   console.log(queryObj);
-  // }
-  // if (exercisesQ) {
-  //   queryObj.exercises = exercisesQ;
-  //   console.log(queryObj);
-  // }
-  // Workout.find(queryObj, (err, workouts) => {
-  //   if (err) {
-  //     throw err;
-  //   }
-  //   else {
-  //     Workout.find().populate('user_id').populate('exercises').exec( (err, workouts) => {
-  //       if(err) {
-  //         throw err;
-  //       }
-  //       else {
-  //         console.log('WORKOUT: ' + workouts);
-  //         res.render('index', {workouts: workouts});
-  //       }
-  //     });
-  //   }
-  // });
-});
-
 
 
 app.get('/login', checkNotAuthenticated, (req, res) => {
@@ -120,7 +76,7 @@ app.get('/login', checkNotAuthenticated, (req, res) => {
 });
 
 app.post('/login', function(req, res, next) {
-  passport.authenticate('local', function(err,user) {
+  passport.authenticate('local', function(err, user) {
     if(user) {
       req.logIn(user, function(err) {
         res.redirect('/');
@@ -178,9 +134,48 @@ app.post('/register', checkNotAuthenticated, (req, res) => {
 
 
 
+app.get('/', checkAuthenticated, (req, res) => {
 
+  // res.render('index', { name: req.user.username})
+  const userQ = req.query.userQ;
+  const nameQ = req.query.nameQ;
+  const createdAtQ = req.query.createdAtQ;
+  const exercisesQ = req.query.exercisesQ;
 
-
+  const queryObj = {};
+  if (userQ) {
+    queryObj.user = userQ;
+    console.log(queryObj);
+  }
+  if (nameQ) {
+    queryObj.name = nameQ;
+    console.log(queryObj);
+  }
+  if (createdAtQ) {
+    queryObj.createdAt = createdAtQ;
+    console.log(queryObj);
+  }
+  if (exercisesQ) {
+    queryObj.exercises = exercisesQ;
+    console.log(queryObj);
+  }
+  Workout.find(queryObj, (err, workouts) => {
+    if (err) {
+      throw err;
+    }
+    else {
+      Workout.find().populate('user_id').populate('exercises').exec( (err, workouts) => {
+        if(err) {
+          throw err;
+        }
+        else {
+          console.log('WORKOUT: ' + workouts);
+          res.render('index', {workouts: workouts, name: req.user.username});
+        }
+      });
+    }
+  });
+});
 
 app.get('/workouts', checkAuthenticated, (req, res) => {
 
