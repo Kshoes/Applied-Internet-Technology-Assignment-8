@@ -225,7 +225,7 @@ app.get('/workouts/create', checkAuthenticated, (req, res) => {
 
 app.post('/workouts/create', checkAuthenticated, (req, res) => {
   const newWorkout = new Workout({
-    user_id: req.session.user.user_id,
+    user_id: req.session.user._id,
     name: req.body.name,
     createdAt: Date.now(),
     exercises: []
@@ -245,7 +245,7 @@ app.post('/workouts/create', checkAuthenticated, (req, res) => {
   //   newWorkout.exercises.push(newExercise);
     
   // }
-
+  console.log(req.session.user._id);
   newWorkout.save((err) => {
     if(err) {
         throw err;
