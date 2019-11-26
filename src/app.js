@@ -149,6 +149,8 @@ app.get('/', checkAuthenticated, (req, res) => {
         throw err;
       }
       else {
+        console.log(user);
+        console.log(user._id);
         queryObj.user_id = user._id;
       }
     });
@@ -168,6 +170,7 @@ app.get('/', checkAuthenticated, (req, res) => {
         throw err;
       }
       else {
+
         queryObj.exercises = JSON.parse(' { "$oid": "' + exercise._id + '"} ');
       }
     });
