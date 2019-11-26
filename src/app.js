@@ -79,6 +79,7 @@ app.post('/login', function(req, res, next) {
   passport.authenticate('local', function(err, user) {
     if(user) {
       req.logIn(user, function(err) {
+        req.session.user = user;  console.log(req.session.user);
         res.redirect('/');
       });
     } else {
@@ -99,15 +100,17 @@ app.get('/register', checkNotAuthenticated, (req, res) => {
 
 app.post('/register', checkNotAuthenticated, (req, res) => {
   User.register(new User({username:req.body.username}), 
-  req.body.password, function(err, user){
-  if (err) {
-    res.render('register', { message:'Invalid registration, try again' });
-  } else {
-  passport.authenticate('local')(req, res, function() {
-    res.redirect('/');
+    req.body.password, function(err, user) {
+      if (err) {
+        res.render('register', { message:'Invalid registration, try again' });
+      } 
+      else {
+      passport.authenticate('local')(req, res, function() {
+        req.session.user = user;  console.log(req.session.user);
+        res.redirect('/');
+      });
+    }
   });
-}
-});
 });
 
 // app.post('/register', checkNotAuthenticated, async (req, res) => {
@@ -223,10 +226,7 @@ app.get('/workouts/create', checkAuthenticated, (req, res) => {
 
 app.post('/workouts/create', checkAuthenticated, (req, res) => {
   const newWorkout = new Workout({
-    user: {
-      username: req.body.user,
-      password: "password"
-    },
+    user: req.session.user,
     name: req.body.name,
     createdAt: Date.now(),
     exercises: []
@@ -242,6 +242,7 @@ app.post('/workouts/create', checkAuthenticated, (req, res) => {
       reps: req.body.exerciseContainer.childNodes[((i+2)*2)],
       weight: req.body.exerciseContainer.childNodes[((i+3)*2)],
     });
+    
     newWorkout.exercises.push(newExercise);
     
   }
