@@ -164,7 +164,7 @@ app.get('/', checkAuthenticated, (req, res) => {
       throw err;
     }
     else {
-      Workout.find().populate('user_id').populate('exercises').exec( (err, workouts) => {
+      Workout.find(queryObj).populate('user_id').populate('exercises').exec( (err, workouts) => {
         if(err) {
           throw err;
         }
@@ -190,7 +190,7 @@ app.get('/workouts', checkAuthenticated, (req, res) => {
         }
         else {
           console.log('WORKOUT: ' + workouts);
-          res.render('index', {workouts: workouts});
+          res.render('profile', {workouts: workouts});
         }
       });
     }
