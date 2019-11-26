@@ -1,0 +1,37 @@
+
+Search:
+<form action="/" method="GET">
+    User: <input type="text" name="userQ" value="">
+    Workout name: <input type="text" name="nameQ" value="">
+    Created on: <input type="text" name="createdAtQ" value="">
+    Exercises: <input type="text" name="exercisesQ" value="">
+    <input type="submit" name="" value="search">
+</form>
+
+My Workouts:
+<table>
+    <tr>
+        <th>User</th>
+        <th>Workout Name</th>
+        <th>Created on</th>
+        <th>Exercises</th>
+    </tr>
+    {{#each workouts}}
+    <tr>
+        <th>{{user_id.username}}</th>
+        <th>{{name}}</th>
+        <th>{{createdAt}}</th>
+        <th>
+            <ul>
+                {{#each exercises}}
+                <li>{{this.name}}</li>
+                {{/each}}
+            </ul>
+        </th>
+    </tr>
+    {{/each}}
+</table>
+
+<form action="/logout?_method=DELETE" method="POST">
+    <button type="submit">Log out</button>
+</form>

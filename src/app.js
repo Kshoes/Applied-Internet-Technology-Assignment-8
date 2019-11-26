@@ -144,7 +144,14 @@ app.get('/', checkAuthenticated, (req, res) => {
 
   const queryObj = {};
   if (userQ) {
-    queryObj.user = userQ;
+    User.find({username: userQ}, (err, user) => {
+      if(err) {
+        throw err;
+      }
+      else {
+        queryObj.user_id = user._id.valueOf();
+      }
+    });
     console.log(queryObj);
   }
   if (nameQ) {
@@ -156,7 +163,14 @@ app.get('/', checkAuthenticated, (req, res) => {
     console.log(queryObj);
   }
   if (exercisesQ) {
-    queryObj.exercises = exercisesQ;
+    Exercise.find({name: exercisesQ}, (err, exercise) => {
+      if(err) {
+        throw err;
+      }
+      else {
+        queryObj.exercises = JSON.parse(' { "$oid:" "' + exercise._id.valueOf() + '"} ');
+      }
+    });
     console.log(queryObj);
   }
   Workout.find(queryObj, (err, workouts) => {
